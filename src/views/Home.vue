@@ -1,18 +1,51 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="left-menu">
+      <Menu />
+    </div>
+    <div class="center">
+      <Datatable v-if="this.$store.state.page === 0" />
+      <Cards v-if="this.$store.state.page === 1" />
+    </div>
+    <div class="right-menu">
+      <Summary />
+    </div>
   </div>
 </template>
-
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Menu from "@/components/Menu.vue";
+import Summary from "@/components/Summary.vue";
+import Cards from "@/components/Cards.vue";
+import Datatable from "@/components/Datatable";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    Menu,
+    Summary,
+    Cards,
+    Datatable,
+  },
+};
 </script>
+<style scoped lang="scss">
+.home {
+  display: flex;
+  justify-content: space-between;
+}
+.left-menu {
+  width: 150px;
+
+  flex-shrink: 0;
+}
+.center {
+  padding-block: 9rem;
+  padding-inline: 2em;
+  height: 100vh;
+  overflow: scroll;
+}
+.right-menu {
+  width: max(17vw, 320px);
+}
+</style>
