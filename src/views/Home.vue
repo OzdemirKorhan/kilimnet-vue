@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="left-menu">
-      <Menu />
+      <Menu @logout="logout" />
     </div>
     <div class="center">
       <Datatable v-if="this.$store.state.page === 0" />
@@ -18,7 +18,7 @@ import Menu from "@/components/Menu.vue";
 import Summary from "@/components/Summary.vue";
 import Cards from "@/components/Cards.vue";
 import Datatable from "@/components/Datatable";
-
+ import {mapActions} from "vuex"
 export default {
   name: "Home",
   components: {
@@ -27,6 +27,19 @@ export default {
     Cards,
     Datatable,
   },
+  methods: {
+    ...mapActions([
+      'getCurrencies',
+      'getCustomers',
+      'getBuildings',
+        'logout'
+    ])
+  },
+  created(){
+    this.getCurrencies();
+    this.getBuildings();
+    this.getCustomers();
+  }
 };
 </script>
 <style scoped lang="scss">

@@ -34,7 +34,7 @@
       <div
         id="settings"
         class="menu-item"
-        @click="choose"
+        @click="$emit('logout')"
         :class="{ chosen: chosen_item === 3 }"
       >
         <img src="@/assets/icons/settings-icon.svg" alt="" />

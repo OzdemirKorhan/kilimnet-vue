@@ -4,7 +4,7 @@
       <div class="headline-selector">
         <p class="headline">Selam, Atilla</p>
         <button class="selector">
-          16D
+          {{selected_building.name}}
           <svg
             width="11"
             height="8"
@@ -19,7 +19,11 @@
               fill="#F26B6E"
             />
           </svg>
+
         </button>
+        <div class="option-container">
+          <button v-for="building in buildings" :key="building.id" @click="$store.commit('SET_SELECTED_BUILDING',{id:building.id,name:building.name})" class="option">{{building.name}}</button>
+        </div>
       </div>
       <img
         src="@/assets/images/profile.png"
@@ -43,7 +47,7 @@
           <p class="value">45</p>
         </div>
       </div>
-      <button class="show-detail">Detaylı İncele</button>
+      <button class="show-detail" @click="deleteNotification">Detaylı İncele</button>
     </div>
     <div class="numbers-container">
       <div class="numbers">
@@ -52,7 +56,7 @@
       </div>
       <div class="numbers">
         <img src="@/assets/icons/dollar-icon.svg" alt="" />
-        <p class="value">8.8₺</p>
+        <p class="value">{{dollarValue}}</p>
       </div>
       <div class="numbers">
         <img src="@/assets/icons/euro-icon.svg" alt="" />
@@ -63,8 +67,33 @@
 </template>
 
 <script>
+import {mapState} from "vuex"
 export default {
   name: "Summary",
+  methods: {
+    deleteNotification(){
+      this.$confirm("Are you sure?").then(() => {
+        //do something...
+      });
+    }
+  },
+  data(){
+    return{
+    }
+  },
+  computed: mapState({
+
+    // to access local state with `this`, a normal function must be used
+    dollarValue (state) {
+      return `${state.currencies?.filter(currency => currency.name === "USD")[0].value}₺`
+    },
+    buildings (state) {
+      return state.buildings
+    },
+    selected_building (state) {
+      return state.selected_building
+    },
+  })
 };
 </script>
 
@@ -84,6 +113,7 @@ export default {
 .headline-container {
   display: flex;
   justify-content: space-between;
+  position:relative;
   .headline {
     font-size: 20px;
     font-weight: 500;
@@ -101,6 +131,30 @@ export default {
       vertical-align: middle;
     }
   }
+
+  .option-container {
+    position: absolute;
+    background-color: #F26B6E;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 1px;
+    display:none;
+  }
+  .option{
+    width: 100%;
+    outline: none;
+    border: none;
+    background: white;
+    color: #F26B6E;
+    &:not(:last-child){
+      margin-bottom: 3px;
+    }
+  }
+  .selector:hover~.option-container,.option-container:hover{
+      display:block;
+
+  }
+
 }
 .statistics-container {
   .statistics {
