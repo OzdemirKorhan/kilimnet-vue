@@ -157,7 +157,7 @@ export default new Vuex.Store({
       if (type){ return ""}
       return new Promise((resolve, reject) => {
         axios
-          .get(process.env.VUE_APP_URL + "customers", {
+          .get(process.env.VUE_APP_URL + "customers/?filter[building]=" + this.state.selected_building.id, {
             headers: { Authorization: state.token }
           })
           .then(response => {

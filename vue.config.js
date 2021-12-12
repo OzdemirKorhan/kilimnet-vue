@@ -8,5 +8,8 @@ module.exports = {
             }
         }
     },
-        outputDir: "dist/acct"
+
+    publicPath: './',
+    outputDir: 'dist/acct',
+
 };

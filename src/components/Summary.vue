@@ -22,7 +22,7 @@
 
         </button>
         <div class="option-container">
-          <button v-for="building in buildings" :key="building.id" @click="$store.commit('SET_SELECTED_BUILDING',{id:building.id,name:building.name})" class="option">{{building.name}}</button>
+          <button v-for="building in buildings" :key="building.id" @click="$store.commit('SET_SELECTED_BUILDING',{id:building.id,name:building.name});getCustomers()" class="option">{{building.name}}</button>
         </div>
       </div>
       <img
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex"
+import {mapState, mapActions} from "vuex"
 export default {
   name: "Summary",
   methods: {
@@ -75,7 +75,11 @@ export default {
       this.$confirm("Are you sure?").then(() => {
         //do something...
       });
-    }
+    },
+    ...mapActions([
+        'getCustomers'
+        ]
+    )
   },
   data(){
     return{
